@@ -53,7 +53,7 @@ class DatabaseHelper {
   Future<int> insert(dynamic model, String table) async {
     Database db = await instance.database;
     print("insert");
-    return await db.insert(table, note.toMap());
+    return await db.insert(table, model.toMap());
   }
 }
 
