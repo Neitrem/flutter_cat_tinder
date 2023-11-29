@@ -13,7 +13,13 @@ dependencies:
     sdk: flutter
   provider: ^6.1.1
   sqlite3: ^2.1.0
+  sqflite: ^2.0.0
   flutter_dotenv: ^5.1.0
+  shared_preferences: ^2.2.2
+  sqlite3_flutter_libs: ^0.5.18
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  sqflite_common_ffi: any
 
 dev_dependencies:
   flutter_test:
@@ -24,5 +30,4 @@ dev_dependencies:
 flutter:
   assets:
     - .env
-    - db.sqlite3
   uses-material-design: true

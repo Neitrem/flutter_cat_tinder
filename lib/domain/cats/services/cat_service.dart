@@ -1,5 +1,5 @@
 import 'package:cinder/data/cats/repository/cat_repository.dart';
-import 'package:cinder/domain/models/cat_model.dart';
+import 'package:cinder/domain/cats/models/cat_model.dart';
 
 class CatService {
   final _repository = CatRepository();

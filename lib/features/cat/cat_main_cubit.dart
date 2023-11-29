@@ -1,5 +1,5 @@
-import 'package:cinder/domain/models/cat_model.dart';
-import 'package:cinder/domain/services/cat_service.dart';
+import 'package:cinder/domain/cats/models/cat_model.dart';
+import 'package:cinder/domain/cats/services/cat_service.dart';
 import 'package:cinder/features/cat/cat_main_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

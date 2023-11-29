@@ -1,4 +1,4 @@
-import 'package:cinder/domain/models/cat_model.dart';
+import 'package:cinder/domain/cats/models/cat_model.dart';
 
 class CatMainState {}
 

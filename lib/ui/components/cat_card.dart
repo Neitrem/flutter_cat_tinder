@@ -1,4 +1,4 @@
-import 'package:cinder/domain/models/cat_model.dart';
+import 'package:cinder/domain/cats/models/cat_model.dart';
 import 'package:cinder/ui/components/card_gesture_detector.dart';
 import 'package:cinder/ui/provider/card_provider.dart';
 import 'package:flutter/material.dart';
