@@ -1,3 +1,4 @@
+import 'package:cinder/data/authentication/models/user_dto.dart';
 import 'package:cinder/data/authentication/repository/user_repository.dart';
 import 'package:cinder/domain/authentication/models/user_model.dart';
 
@@ -14,8 +15,8 @@ class UserService {
   //   return UserModel.fromDTO(userDto);
   // }
 
-  void register(String login, String password) async {
-    final s = await _repository.register(login, password);
+  void register(UserModel model) async {
+    final s = await _repository.register(UserDTO.fromModel(model));
     print(s.toString());
   }
 }

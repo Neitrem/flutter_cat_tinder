@@ -1,5 +1,6 @@
 import 'package:cinder/features/authentication/authentication_cubit.dart';
 import 'package:cinder/features/authentication/authentication_state.dart';
+import 'package:cinder/ui/pages/authenticate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +10,7 @@ class AunthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthenticationCubit(),
+      create: (context) => AuthenticationCubit()..setData(),
       child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationError) {
@@ -24,9 +25,12 @@ class AunthenticationScreen extends StatelessWidget {
             );
           }
         },
+        buildWhen: (previous, current) =>  current is AuthenticationBuildState,
         builder: (context, state) {
           if (state is AuthenticationInitial) {
-            context.read<AuthenticationCubit>().register("login", "password");
+            
+          } else if (state is AuthenticationData) {
+            return AuthenticatePage();
           }
           return const Text("data");
         },

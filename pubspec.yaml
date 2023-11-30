@@ -30,4 +30,5 @@ dev_dependencies:
 flutter:
   assets:
     - .env
+    - assets/CinderLogo.png
   uses-material-design: true

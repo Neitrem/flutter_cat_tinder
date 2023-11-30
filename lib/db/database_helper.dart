@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cinder/db/interfaces/db_model_interface.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -40,7 +41,7 @@ class DatabaseHelper {
     );
 
     db.execute('''
-      CREATE TABLE IF NOT EXISTS urls (
+      CREATE TABLE IF NOT EXISTS favorite (
         id INTEGER PRIMARY KEY,
         url TEXT NOT NULL,
         user_id INTEGER NOT NULL,
@@ -50,10 +51,15 @@ class DatabaseHelper {
     );
   }
 
-  Future<int> insert(dynamic model, String table) async {
+  Future<int> insert(IDBModel model) async {
     Database db = await instance.database;
     print("insert");
-    return await db.insert(table, model.toMap());
+    return await db.insert(model.table, model.toMap());
+  }
+
+  Future<List<Map<String, dynamic>>> get(IDBModel model) async {
+    Database db = await instance.database;
+    return await db.query(model.table);
   }
 }
 
