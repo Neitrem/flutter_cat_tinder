@@ -23,55 +23,68 @@ class UserRepository {
     }
   }
 
-  Future<DBResponce> login(UserDTO dto) async {
+  Future<DBResponse> login(UserDTO dto) async {
     List<Map<String, dynamic>> maps = await dbHelper.get(dto);
-    
+
     for (Map<String, dynamic> map in maps) {
       if (map['login'] as String == dto.login) {
         if (map['password'] as String == dto.login) {
-          return DBResponce(
-            response: Responce.success,
-            responseDetails: responceDetailsSuccess,
-            data: UserDTO.fromJson(map)
-          );
-            
+          return DBResponse(
+              response: Response.success,
+              responseDetails: responceDetailsSuccess,
+              data: UserDTO.fromJson(map));
         } else {
-          return DBResponce(
-            response: Responce.failure,
-            responseDetails: responceDetailsFailureInvalidPassword,
-            data: UserDTO.fromJson(map)
-          );
+          return DBResponse(
+              response: Response.failure,
+              responseDetails: responceDetailsFailureInvalidPassword,
+              data: UserDTO.fromJson(map));
         }
       }
     }
 
-    return DBResponce(
-      response: Responce.failure,
-      responseDetails: responceDetailsFailureNoUser,
-      data: null
-    );
+    return DBResponse(
+        response: Response.failure,
+        responseDetails: responceDetailsFailureNoUser,
+        data: null);
   }
 
-  Future<String?> register(UserDTO dto) async {
-    final s = await dbHelper.insert(dto);
-    return s.toString();
+  Future<DBResponse> register(UserDTO dto) async {
+    try {
+      final int insertResult = await dbHelper.insert(dto);
+      return DBResponse(
+        response: Response.success,
+        responseDetails: responceDetailsSuccess,
+        data: UserDTO(
+          id: insertResult - 1,
+          login: dto.login,
+          password: dto.password,
+        ),
+      );
+    } catch (e) {
+      print(e);
+      return DBResponse(
+        response: Response.failure,
+        responseDetails: responceDetailsFailureErrorDuringRegister,
+        data: null,
+      );
+    }
   }
 }
 
-class DBResponce {
-  final Responce response;
+class DBResponse {
+  final Response response;
   final String responseDetails;
-  final dynamic data;
+  final UserDTO? data;
 
-  DBResponce({
-    required this.response,
-    required this.responseDetails,
-    required this.data
-  });
+  DBResponse(
+      {required this.response,
+      required this.responseDetails,
+      required this.data});
 }
 
-enum Responce {success, failure}
+enum Response { success, failure }
 
 const String responceDetailsSuccess = "";
 const String responceDetailsFailureNoUser = "No user with this login";
 const String responceDetailsFailureInvalidPassword = "Invalid password";
+const String responceDetailsFailureErrorDuringRegister = "Somrthing goes wrong";

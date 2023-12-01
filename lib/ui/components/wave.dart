@@ -59,8 +59,8 @@ class _WaveContainerState extends State<WaveContainer>
 
   @override
   void dispose() {
-    _animationController?.stop();
-    _animationController?.dispose();
+    _animationController.stop();
+    _animationController.dispose();
     super.dispose();
   }
 }

@@ -16,39 +16,32 @@ class SplashScreenPage extends StatefulWidget {
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
 
-
-  
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    //loadImage("assets/CinderLogoVoid.png");
-  }
-  
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Container(
-            alignment: Alignment.bottomCenter,
+            decoration: const BoxDecoration(
+              gradient: primaryColorGragient
+            ),
+          ),
+          Container(
+            alignment: Alignment.topCenter,
             child: ChangeNotifierProvider(
-              create: (context) => WaveProvider(
-                startWaveHeight: 350.0,
-                finalWaveHeight: 1000.0,
-              )..setNewHeight(),
-              child: const WaveContainer(
-                width: double.infinity,
-                waveColor: primaryColor,
-                duration: Duration(milliseconds: 1000),
+              create: (context) {
+                return WaveProvider(
+                  startWaveHeight: 540.0,
+                  finalWaveHeight: 0.0,
+                )..setNewHeight();
+              },
+              child: Transform.rotate(
+                angle: pi,
+                child: const WaveContainer(
+                  width: double.infinity,
+                  waveColor: white,
+                  duration: Duration(milliseconds: 1000),
+                ),
               ),
             ),
           ),

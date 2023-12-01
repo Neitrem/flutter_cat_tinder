@@ -10,15 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SplashScreenScreen extends StatelessWidget {
   const SplashScreenScreen({super.key});
 
-  Future<void> loadImage(String imagePath, BuildContext context) async {
+  Future<void> loadImage(BuildContext context) async {
     try {
       final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
       final images = (json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/'))).toList();
 
-      for (String imgPath)
-
-      await precacheImage(AssetImage(imagePath), context);
-
+      for (String imgPath in images) {
+        await precacheImage(AssetImage(imgPath), context);
+      }
+      
       context.read<SplashScreenCubit>().checkInternetStatus();
       print('Image loaded and cached successfully!');
     } catch (e) {
@@ -46,7 +46,7 @@ class SplashScreenScreen extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is SplashScreenInitialState) {
-            loadImage("assets/CinderLogoVoid.png", context);
+            loadImage(context);
           } else if (state is SplashScreenLoadingState) {
             return SplashScreenPage();
           } else if (state is SplashScreenDataState) {

@@ -1,8 +1,5 @@
 import 'package:cinder/data/cats/repository/cat_repository.dart';
-import 'package:cinder/features/authentication/authentication_screen.dart';
-import 'package:cinder/features/cat/cat_main_screen.dart';
 import 'package:cinder/features/splash_screen/splash_screen_screen.dart';
-import 'package:cinder/ui/pages/main_page.dart';
 import 'package:cinder/ui/styles/styles.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';

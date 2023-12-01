@@ -1,6 +1,5 @@
 import 'package:cinder/domain/splash/services/splash_service.dart';
 import 'package:cinder/features/splash_screen/splash_screen_state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 

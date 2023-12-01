@@ -5,33 +5,36 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthenticatePage extends StatefulWidget {
-  const AuthenticatePage({super.key});
+  AuthenticatePage({super.key});
+
+  final inputLoginController = TextEditingController();
+  final inputPasswordController = TextEditingController();
 
   @override
   State<AuthenticatePage> createState() => _AuthenticatePageState();
 }
 
 class _AuthenticatePageState extends State<AuthenticatePage> {
-  int currentPage = 0;
-  final inputLoginController = TextEditingController();
-  final inputPasswordController = TextEditingController();
-
-  enter() {
-    if (inputLoginController.text.isNotEmpty ||
-        inputPasswordController.text.isNotEmpty) {
+  void enter() {
+    if (widget.inputLoginController.text.isNotEmpty ||
+        widget.inputPasswordController.text.isNotEmpty) {
       context.read<AuthenticationCubit>().currentPage == PageType.login
-          ? () => context
-              .read<AuthenticationCubit>()
-              .login(inputLoginController.text, inputPasswordController.text)
-          : () => context.read<AuthenticationCubit>().register(
-              inputLoginController.text, inputPasswordController.text);
-      inputLoginController.clear();
-      inputPasswordController.clear();
+          ? context.read<AuthenticationCubit>().login(
+                widget.inputLoginController.text,
+                widget.inputPasswordController.text,
+              )
+          : context.read<AuthenticationCubit>().register(
+                widget.inputLoginController.text,
+                widget.inputPasswordController.text,
+              );
+      widget.inputLoginController.clear();
+      widget.inputPasswordController.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(context.read<AuthenticationCubit>().currentPage);
     return Scaffold(
       body: Center(
         child: Column(
@@ -51,14 +54,14 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
                 children: <Widget>[
                   InputContainer(
                     hintText: "Login",
-                    inputController: inputLoginController,
+                    inputController: widget.inputLoginController,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   InputContainer(
                     hintText: "Password",
-                    inputController: inputPasswordController,
+                    inputController: widget.inputPasswordController,
                     isPassword: true,
                   ),
                   const SizedBox(
