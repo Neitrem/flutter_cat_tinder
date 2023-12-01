@@ -20,6 +20,7 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   sqflite_common_ffi: any
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -31,4 +32,5 @@ flutter:
   assets:
     - .env
     - assets/CinderLogo.png
+    - assets/CinderLogoVoid.png
   uses-material-design: true

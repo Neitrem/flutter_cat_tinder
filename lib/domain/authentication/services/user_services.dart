@@ -5,18 +5,37 @@ import 'package:cinder/domain/authentication/models/user_model.dart';
 class UserService {
   final UserRepository _repository = UserRepository();
 
-  // Future<UserModel?> login(String login, String password) async {
-  //   final userDto = await _repository.login(login, password);
+  Future<ServiceResponse> login(UserModel model) async {
+    final DBResponse response = await _repository.login(
+      UserDTO.fromModel(model),
+    );
+    return ServiceResponse.fromDBResponce(response);
+  }
 
-  //   if (userDto == null) {
-  //     return null;
-  //   }
+  Future<ServiceResponse> register(UserModel model) async {
+    final DBResponse response = await _repository.register(
+      UserDTO.fromModel(model),
+    );
+    return ServiceResponse.fromDBResponce(response);
+  }
+}
 
-  //   return UserModel.fromDTO(userDto);
-  // }
+class ServiceResponse {
+  final Response response;
+  final String responseDetails;
+  final UserModel? data;
 
-  void register(UserModel model) async {
-    final s = await _repository.register(UserDTO.fromModel(model));
-    print(s.toString());
+  ServiceResponse({
+    required this.response,
+    required this.responseDetails,
+    required this.data,
+  });
+
+  factory ServiceResponse.fromDBResponce(DBResponse response) {
+    return ServiceResponse(
+      response: response.response,
+      responseDetails: response.responseDetails,
+      data: UserModel.fromDTO(response.data!),
+    );
   }
 }

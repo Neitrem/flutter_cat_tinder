@@ -36,11 +36,12 @@ class CatMain extends StatelessWidget {
             );
           } else if (state is CatMainData) {
             return ChangeNotifierProvider(
-                create: (context) => CardProvider(
-                      cats: state.cats,
-                      loadMoreCats: context.read<CatCubit>().loadMoreCats,
-                    ),
-                child: MainPage(cats: state.cats));
+              create: (context) => CardProvider(
+                cats: state.cats,
+                loadMoreCats: context.read<CatCubit>().loadMoreCats,
+              ),
+              child: MainPage(cats: state.cats),
+            );
           }
           return const Text("ffdf");
         },
