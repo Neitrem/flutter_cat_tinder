@@ -8,7 +8,7 @@ enum PageType { login, register }
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   PageType currentPage;
   AuthenticationCubit({this.currentPage = PageType.login})
-      : super(AuthenticationInitial());
+      : super(AuthenticationInitial(login: '', password: ''));
 
   final UserService _service = UserService();
 

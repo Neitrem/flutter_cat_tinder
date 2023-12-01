@@ -6,7 +6,12 @@ final class AuthenticationBuildState extends AuthenticationState {}
 
 final class AuthenticationListenState extends AuthenticationState {}
 
-final class AuthenticationInitial extends AuthenticationBuildState {}
+final class AuthenticationInitial extends AuthenticationBuildState {
+  final String? login;
+  final String? password;
+
+  AuthenticationInitial({required this.login, required this.password});
+}
 
 final class AuthenticationLoading extends AuthenticationBuildState {}
 

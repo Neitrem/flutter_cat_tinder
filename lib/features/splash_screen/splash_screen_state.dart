@@ -15,7 +15,9 @@ final class SplashScreenErrorState extends SplashScreenListenState {
 }
 
 final class SplashScreenDataState extends SplashScreenBuildState {
- 
+  Map<String, dynamic>? data;
+
+  SplashScreenDataState({required this.data});
 }
 
 

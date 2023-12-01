@@ -1,6 +1,8 @@
 import 'package:cinder/data/cats/repository/cat_repository.dart';
 import 'package:cinder/features/authentication/authentication_screen.dart';
 import 'package:cinder/features/cat/cat_main_screen.dart';
+import 'package:cinder/features/splash_screen/splash_screen_screen.dart';
+import 'package:cinder/ui/pages/main_page.dart';
 import 'package:cinder/ui/styles/styles.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
+  
   runApp(MyApp());
 }
 
@@ -30,8 +33,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
           useMaterial3: true,
         ),
-        // home: const AunthenticationScreen()
-        home: const CatMain(),
+        // home: const MainPage()
+        home: const SplashScreenScreen(),
     );
   }
 }
