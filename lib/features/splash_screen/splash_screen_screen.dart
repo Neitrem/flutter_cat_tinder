@@ -50,8 +50,12 @@ class SplashScreenScreen extends StatelessWidget {
           } else if (state is SplashScreenLoadingState) {
             return SplashScreenPage();
           } else if (state is SplashScreenDataState) {
-            
-            return const AuthenticationScreen();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AuthenticationScreen()
+              ),
+            );
           }
           return const Scaffold();
         },
