@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
           Expanded(
             flex: 2,
             child: Center(
-              child: buildCards(),
+              child: buildCards(context),
             ),
           ),
           const Expanded(
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget buildCards() {
+  Widget buildCards(BuildContext context) {
     final provider = Provider.of<CardProvider>(context);
     final cats = provider.cats;
 
