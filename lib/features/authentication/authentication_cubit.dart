@@ -38,14 +38,24 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final UserService _service = UserService();
 
   Future<void> registerUser({String login = "", String password = ""}) async {
-    emit(
-      AuthenticationLoading(),
-    );
-    FocusManager.instance.primaryFocus?.unfocus();
-    final ServiceResponse response = await _service.register(
-      UserModel(id: 0, login: login, password: password),
-    );
-    responseAnalis(response);
+    try {
+      emit(
+        AuthenticationLoading(),
+      );
+      FocusManager.instance.primaryFocus?.unfocus();
+      final ServiceResponse response = await _service.register(
+        UserModel(id: 0, login: login, password: password),
+      );
+      responseAnalis(response);
+    } on Exception catch (e) {
+      emit(
+        AuthenticationError(
+          error: e.toString(),
+          fromFunction: registerUser,
+          namedArguments: {#login: login, #password: password},
+        ),
+      );
+    }
   }
 
   // void dd({ login,  password}) {
@@ -54,11 +64,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   Future<void> loginUser({String login = "", String password = ""}) async {
     try {
-      if (counter == 0) {
-        counter += 1;
-        throw Exception();
-      }
-      
       emit(
         AuthenticationLoading(),
       );
@@ -68,7 +73,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       );
       responseAnalis(response);
     } on Exception catch (e) {
-      print("errrro");
       emit(
         AuthenticationError(
           error: e.toString(),
