@@ -18,15 +18,10 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
   void enter() {
     if (widget.inputLoginController.text.isNotEmpty ||
         widget.inputPasswordController.text.isNotEmpty) {
-      context.read<AuthenticationCubit>().currentPage == PageType.login
-          ? context.read<AuthenticationCubit>().login(
-                widget.inputLoginController.text,
-                widget.inputPasswordController.text,
-              )
-          : context.read<AuthenticationCubit>().register(
-                widget.inputLoginController.text,
-                widget.inputPasswordController.text,
-              );
+      context.read<AuthenticationCubit>().pageData.mainButtonAction(
+            login: widget.inputLoginController.text,
+            password: widget.inputPasswordController.text,
+          );
       widget.inputLoginController.clear();
       widget.inputPasswordController.clear();
     }
@@ -34,7 +29,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(context.read<AuthenticationCubit>().currentPage);
     return Scaffold(
       body: Center(
         child: Column(
@@ -45,13 +39,16 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
               scale: 3,
             ),
             const SizedBox(
-              height: 60.0,
+              height: 30.0,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  ErrorContainer(
+                    errorText: context.read<AuthenticationCubit>().error,
+                  ),
                   InputContainer(
                     hintText: "Login",
                     inputController: widget.inputLoginController,
@@ -79,10 +76,10 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
                         onPressed: enter,
                         style: primaryButtonStyle,
                         child: Text(
-                          context.read<AuthenticationCubit>().currentPage ==
-                                  PageType.login
-                              ? "Enter"
-                              : "Register",
+                          context
+                              .read<AuthenticationCubit>()
+                              .pageData
+                              .mainButtonText,
                           style: commonTextStyleLight,
                         ),
                       ),
@@ -91,29 +88,24 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(context.read<AuthenticationCubit>().currentPage ==
-                              PageType.login
-                          ? "New user?"
-                          : "Already have account?"),
+                      Text(context
+                          .read<AuthenticationCubit>()
+                          .pageData
+                          .serviceButtonText[0]),
                       TextButton(
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.all(0)),
-                              splashFactory: NoSplash.splashFactory),
-                          onPressed: () =>
-                              context.read<AuthenticationCubit>().currentPage ==
-                                      PageType.login
-                                  ? context
-                                      .read<AuthenticationCubit>()
-                                      .changePage(PageType.register)
-                                  : context
-                                      .read<AuthenticationCubit>()
-                                      .changePage(PageType.login),
-                          child: Text(
-                              context.read<AuthenticationCubit>().currentPage ==
-                                      PageType.login
-                                  ? "Sign Up!"
-                                  : "Log in!"))
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.all(0)),
+                            splashFactory: NoSplash.splashFactory),
+                        onPressed: () =>
+                            context.read<AuthenticationCubit>().changePage(),
+                        child: Text(
+                          context
+                              .read<AuthenticationCubit>()
+                              .pageData
+                              .serviceButtonText[1],
+                        ),
+                      )
                     ],
                   )
                 ],
@@ -123,5 +115,47 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
         ),
       ),
     );
+  }
+}
+
+class ErrorContainer extends StatelessWidget {
+  final String? errorText;
+  const ErrorContainer({
+    super.key,
+    this.errorText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (context.read<AuthenticationCubit>().error == null) {
+      return const SizedBox(
+        height: 30.0,
+      );
+    } else {
+      return Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          border: Border.all(
+            width: 1,
+            color: lightGrey,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Icon(
+              Icons.warning,
+              color: lightGrey,
+            ),
+            FittedBox(
+              child: Text(errorText!,
+                  style: commonTextStyleDark, maxLines: 2, softWrap: false),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

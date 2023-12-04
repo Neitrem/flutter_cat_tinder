@@ -9,16 +9,23 @@ final class AuthenticationListenState extends AuthenticationState {}
 final class AuthenticationInitial extends AuthenticationBuildState {
   final String? login;
   final String? password;
+  bool error;
 
-  AuthenticationInitial({required this.login, required this.password});
+  AuthenticationInitial({
+    this.login,
+    this.password,
+    this.error = false,
+  });
 }
 
 final class AuthenticationLoading extends AuthenticationBuildState {}
 
 final class AuthenticationError extends AuthenticationListenState {
   final String error;
+  final Function fromFunction;
+  final Map<Symbol, dynamic>? namedArguments;
 
-  AuthenticationError({required this.error});
+  AuthenticationError({required this.error, required this.fromFunction, this.namedArguments});
 }
 
 final class AuthenticationData extends AuthenticationBuildState {

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-class CatMain extends StatelessWidget {
-  const CatMain({super.key});
+class CatMainScreen extends StatelessWidget {
+  const CatMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -10,14 +10,16 @@ final class SplashScreenLoadingState extends SplashScreenBuildState {}
 
 final class SplashScreenErrorState extends SplashScreenListenState {
   final String error;
+  final Function fromFunction;
 
-  SplashScreenErrorState({required this.error});
+  SplashScreenErrorState({required this.error, required this.fromFunction});
 }
 
 final class SplashScreenDataState extends SplashScreenBuildState {
-  Map<String, dynamic>? data;
+  final String? login;
+  final String? password;
 
-  SplashScreenDataState({required this.data});
+  SplashScreenDataState({this.login, this.password});
 }
 
 

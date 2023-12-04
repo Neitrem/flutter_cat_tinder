@@ -14,7 +14,6 @@ class WaveProvider extends ChangeNotifier {
   Future<void> setNewHeight() async {
     try {
       await Future.delayed(const Duration(seconds: 1), () {});
-      print("dsd");
       currentWaveHeight = finalWaveHeight;
       notifyListeners();
     } catch (e) {}

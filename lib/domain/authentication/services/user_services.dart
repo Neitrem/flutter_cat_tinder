@@ -1,6 +1,7 @@
 import 'package:cinder/data/authentication/models/user_dto.dart';
 import 'package:cinder/data/authentication/repository/user_repository.dart';
 import 'package:cinder/domain/authentication/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   final UserRepository _repository = UserRepository();
@@ -18,24 +19,32 @@ class UserService {
     );
     return ServiceResponse.fromDBResponce(response);
   }
+
+  Future<void> saveLoginData(String login, String password) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      await prefs.setString('login', login);
+      await prefs.setString('password', password);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class ServiceResponse {
   final Response response;
-  final String responseDetails;
   final UserModel? data;
 
   ServiceResponse({
     required this.response,
-    required this.responseDetails,
     required this.data,
   });
 
   factory ServiceResponse.fromDBResponce(DBResponse response) {
     return ServiceResponse(
       response: response.response,
-      responseDetails: response.responseDetails,
-      data: UserModel.fromDTO(response.data!),
+      data: response.data == null ? null : UserModel.fromDTO(response.data!),
     );
   }
 }

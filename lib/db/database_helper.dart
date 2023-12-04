@@ -51,7 +51,6 @@ class DatabaseHelper {
 
   Future<int> insert(IDBModel model) async {
     Database db = await instance.database;
-    print("insert");
     return await db.insert(
       model.table,
       {
@@ -65,4 +64,9 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.query(model.table);
   }
+
+  Future<bool> userExist(IDBModel model) async {
+    Database db = await instance.database;
+    return (await db.query(model.table, where: "login = ?", whereArgs: [model.toMap()['login']])).isNotEmpty;
+  } 
 }

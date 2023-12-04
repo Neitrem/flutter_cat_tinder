@@ -28,63 +28,67 @@ class UserRepository {
 
     for (Map<String, dynamic> map in maps) {
       if (map['login'] as String == dto.login) {
-        if (map['password'] as String == dto.login) {
+        if (map['password'] as String == dto.password) {
           return DBResponse(
-              response: Response.success,
-              responseDetails: responceDetailsSuccess,
-              data: UserDTO.fromJson(map));
+            response: Response.success,
+            data: UserDTO.fromJson(map),
+          );
         } else {
           return DBResponse(
-              response: Response.failure,
-              responseDetails: responceDetailsFailureInvalidPassword,
-              data: UserDTO.fromJson(map));
+            response: Response.failureWrongPass,
+            data: UserDTO.fromJson(map),
+          );
         }
       }
     }
 
     return DBResponse(
-        response: Response.failure,
-        responseDetails: responceDetailsFailureNoUser,
-        data: null);
+      response: Response.failureNoUser,
+      data: null,
+    );
   }
 
   Future<DBResponse> register(UserDTO dto) async {
     try {
-      final int insertResult = await dbHelper.insert(dto);
-      return DBResponse(
-        response: Response.success,
-        responseDetails: responceDetailsSuccess,
-        data: UserDTO(
-          id: insertResult - 1,
-          login: dto.login,
-          password: dto.password,
-        ),
-      );
+      if (await dbHelper.userExist(dto)) {
+        return DBResponse(
+          response: Response.failureUserAlreadyExist,
+          data: null,
+        );
+      } else {
+        final int insertResult = await dbHelper.insert(dto);
+        return DBResponse(
+          response: Response.success,
+          data: UserDTO(
+            id: insertResult - 1,
+            login: dto.login,
+            password: dto.password,
+          ),
+        );
+      }
     } catch (e) {
-      print(e);
       return DBResponse(
-        response: Response.failure,
-        responseDetails: responceDetailsFailureErrorDuringRegister,
+        response: Response.failureServiceError,
         data: null,
       );
     }
   }
 }
 
-class DBResponse {
-  final Response response;
-  final String responseDetails;
-  final UserDTO? data;
+class ee {
+  String code;
 
-  DBResponse(
-      {required this.response,
-      required this.responseDetails,
-      required this.data});
+  ee({required this.code});
 }
 
-enum Response { success, failure }
+class DBResponse {
+  final Response response;
+  final UserDTO? data;
 
-const String responceDetailsSuccess = "";
-const String responceDetailsFailureNoUser = "No user with this login";
-const String responceDetailsFailureInvalidPassword = "Invalid password";
-const String responceDetailsFailureErrorDuringRegister = "Somrthing goes wrong";
+  DBResponse({
+    required this.response,
+    required this.data,
+  });
+}
+
+enum Response { success, failureWrongPass, failureNoUser, failureServiceError, failureUserAlreadyExist }

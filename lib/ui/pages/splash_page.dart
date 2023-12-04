@@ -31,7 +31,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             child: ChangeNotifierProvider(
               create: (context) {
                 return WaveProvider(
-                  startWaveHeight: 540.0,
+                  startWaveHeight: 570.0,
                   finalWaveHeight: 0.0,
                 )..setNewHeight();
               },

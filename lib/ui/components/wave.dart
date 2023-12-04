@@ -42,7 +42,7 @@ class _WaveContainerState extends State<WaveContainer>
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(seconds: 8),
+      duration: const Duration(seconds: 7),
       width: widget.width,
       height: Provider.of<WaveProvider>(context).currentWaveHeight,
       child: AnimatedBuilder(
