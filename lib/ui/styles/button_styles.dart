@@ -4,5 +4,5 @@ import 'package:flutter/material.dart';
 ButtonStyle primaryButtonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
   shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
-  textStyle: MaterialStateProperty.all<TextStyle>(commonTextStyleLight as TextStyle)
+  textStyle: MaterialStateProperty.all<TextStyle>(commonTextStyleLight),
 );

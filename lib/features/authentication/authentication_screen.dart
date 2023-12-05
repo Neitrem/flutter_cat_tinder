@@ -7,7 +7,6 @@ import 'package:cinder/ui/pages/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class AuthenticationScreen extends StatelessWidget {
   final String? login;
   final String? password;
@@ -25,7 +24,19 @@ class AuthenticationScreen extends StatelessWidget {
         dataLogin: null,
         dataPassword: null,
       ),
-      child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+      child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationData) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CatMainScreen(
+                  user: state.user,
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is AuthenticationInitial) {
             return AuthenticatePage();
@@ -36,8 +47,6 @@ class AuthenticationScreen extends StatelessWidget {
                 const LoadingAnimation(),
               ],
             );
-          } else if (state is AuthenticationData) {
-            return const CatMainScreen();
           } else if (state is AuthenticationError) {
             return ErrorPage(
               fromFunction: state.fromFunction,
@@ -51,5 +60,3 @@ class AuthenticationScreen extends StatelessWidget {
     );
   }
 }
-
-

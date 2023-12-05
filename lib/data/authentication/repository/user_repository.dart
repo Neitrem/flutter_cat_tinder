@@ -75,12 +75,6 @@ class UserRepository {
   }
 }
 
-class ee {
-  String code;
-
-  ee({required this.code});
-}
-
 class DBResponse {
   final Response response;
   final UserDTO? data;

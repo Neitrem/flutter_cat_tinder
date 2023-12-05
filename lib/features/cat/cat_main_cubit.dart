@@ -20,6 +20,7 @@ class CatCubit extends Cubit<CatMainState> {
       emit(
         CatMainError(
           error: e.toString(),
+          fromFunction: getCats,
         ),
       );
     }
@@ -27,24 +28,20 @@ class CatCubit extends Cubit<CatMainState> {
 
   Future<void> loadMoreCats() async {
     try {
-      
       final newCats = await _service.getCats(amount: 3);
       for (CatModel newCat in newCats) {
         cats.insert(0, newCat);
       }
       emit(
-        CatMainData(cats: cats)
+        CatMainData(cats: cats),
       );
     } catch (e) {
       emit(
         CatMainError(
           error: e.toString(),
-        )
+          fromFunction: loadMoreCats,
+        ),
       );
     }
-  }
-
-  void popCat() {
-    cats.removeAt(cats.length);
   }
 }

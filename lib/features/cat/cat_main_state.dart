@@ -12,8 +12,12 @@ final class CatMainLoading extends CatMainBuildState {}
 
 final class CatMainError extends CatMainListenState {
   final String error;
+  final Function fromFunction;
 
-  CatMainError({required this.error});
+  CatMainError({
+    required this.error,
+    required this.fromFunction,
+  });
 }
 
 final class CatMainData extends CatMainBuildState {

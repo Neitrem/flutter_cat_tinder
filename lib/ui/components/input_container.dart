@@ -32,7 +32,7 @@ class _InputContainerState extends State<InputContainer> {
       borderRadius: borderRadius,
       child: Container(
         
-        padding: EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 20.0),
         decoration: const BoxDecoration(),
         width: 500,
         child: TextField(

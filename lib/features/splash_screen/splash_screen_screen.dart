@@ -13,22 +13,29 @@ class SplashScreenScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SplashScreenCubit()..loadImage(context),
-      child: BlocBuilder<SplashScreenCubit, SplashScreenState>(
+      child: BlocConsumer<SplashScreenCubit, SplashScreenState>(
+        listener: (context, state) {
+          if (state is SplashScreenDataState) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AuthenticationScreen(
+                  login: state.login,
+                  password: state.password,
+                ),
+              ),
+            );
+          } 
+        },
         builder: (context, state) {
           if (state is SplashScreenLoadingState) {
             return SplashScreenPage();
-          } else if (state is SplashScreenDataState) {
-            return AuthenticationScreen(
-              login: state.login,
-              password: state.password,
-            );
           } else if (state is SplashScreenErrorState) {
             return ErrorPage(
               fromFunction: state.fromFunction,
               errorText: state.error,
             );
           }
-
           return const Scaffold();
         },
       ),

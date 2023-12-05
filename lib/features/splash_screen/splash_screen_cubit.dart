@@ -44,7 +44,6 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
 
   Future<void> checkInternet() async {
     try {
-
       bool result = await InternetConnectionChecker().hasConnection;
       if (result == true) {
         print('YAY! Free cute dog pics!');
@@ -59,18 +58,17 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
       }
     } on Exception catch (e) {
       emit(
-          SplashScreenErrorState(
-            error: e.toString(),
-            fromFunction: checkInternet,
-          ),
-        );
+        SplashScreenErrorState(
+          error: e.toString(),
+          fromFunction: checkInternet,
+        ),
+      );
     }
   }
 
   Future<Map<String, dynamic>?> getSavedData() async {
     return await _service.getSavedData();
   }
-
 
   Future<void> loadImage(BuildContext context) async {
     try {
@@ -82,7 +80,7 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
           .where((String key) => key.startsWith('assets/'))).toList();
 
       for (String imgPath in images) {
-        await precacheImage(AssetImage(imgPath), context);
+        if (context.mounted) await precacheImage(AssetImage(imgPath), context);
       }
 
       await load();

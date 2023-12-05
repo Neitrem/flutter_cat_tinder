@@ -1,6 +1,7 @@
 import 'package:cinder/domain/cats/models/cat_model.dart';
 import 'package:cinder/ui/components/cat_card.dart';
 import 'package:cinder/ui/provider/card_provider.dart';
+import 'package:cinder/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +33,30 @@ class _MainPageState extends State<MainPage> {
               child: buildCards(),
             ),
           ),
-          const Expanded(
-            child: Text("wdwdwd"),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                CircleWrappedGradientIconButton(
+                  size: 120,
+                  gradient: primaryColorGragient,
+                  icon: Icons.abc,
+                  toDo: () {},
+                ),
+                CircleWrappedGradientIconButton(
+                  size: 70,
+                  gradient: primaryColorGragient,
+                  icon: Icons.star,
+                  toDo: () {},
+                ),
+                CircleWrappedGradientIconButton(
+                  size: 120,
+                  gradient: primaryColorGragient,
+                  icon: Icons.favorite,
+                  toDo: () {},
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -44,7 +67,6 @@ class _MainPageState extends State<MainPage> {
     final provider = Provider.of<CardProvider>(context);
     final cats = provider.cats;
 
-
     return Stack(
       children: cats
           .map(
@@ -54,6 +76,71 @@ class _MainPageState extends State<MainPage> {
             ),
           )
           .toList(),
+    );
+  }
+}
+
+class CircleWrappedGradientIconButton extends StatelessWidget {
+  final double size;
+  final Gradient gradient;
+  final IconData icon;
+  final Function() toDo;
+
+  const CircleWrappedGradientIconButton({
+    super.key,
+    required this.size,
+    required this.gradient,
+    required this.icon,
+    required this.toDo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.all(0),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(size / 2),
+          ),
+        ),
+        onPressed: toDo,
+        child: GradientIcon(
+          icon,
+          size * 0.7,
+          gradient,
+        ),
+      ),
+    );
+  }
+}
+
+class GradientIcon extends StatelessWidget {
+  const GradientIcon(this.icon, this.size, this.gradient, {super.key});
+
+  final IconData icon;
+  final double size;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      child: SizedBox(
+        width: size * 1.2,
+        height: size * 1.2,
+        child: Icon(
+          icon,
+          size: size,
+          color: Colors.white,
+        ),
+      ),
+      shaderCallback: (Rect bounds) {
+        final Rect rect = Rect.fromLTRB(0, 0, size, size);
+        return gradient.createShader(rect);
+      },
     );
   }
 }

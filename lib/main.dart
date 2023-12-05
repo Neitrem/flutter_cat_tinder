@@ -1,4 +1,6 @@
 import 'package:cinder/data/cats/repository/cat_repository.dart';
+import 'package:cinder/domain/authentication/models/user_model.dart';
+import 'package:cinder/features/cat/cat_main_screen.dart';
 import 'package:cinder/features/splash_screen/splash_screen_screen.dart';
 import 'package:cinder/ui/styles/styles.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -30,8 +32,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
           useMaterial3: true,
         ),
-        // home: const MainPage()
-        home: const SplashScreenScreen(),
+        home: CatMainScreen(user: UserModel(id: 1, login: "", password: ""),)
+        // home: const SplashScreenScreen(),
     );
   }
 }

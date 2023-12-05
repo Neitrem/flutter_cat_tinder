@@ -37,7 +37,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   final UserService _service = UserService();
 
-  Future<void> registerUser({String login = "", String password = ""}) async {
+  Future<void> registerUser({required String login, required String password}) async {
     try {
       emit(
         AuthenticationLoading(),
@@ -58,11 +58,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  // void dd({ login,  password}) {
-  //   loginUser(login, password);
-  // }
-
-  Future<void> loginUser({String login = "", String password = ""}) async {
+  Future<void> loginUser({required String login, required String password}) async {
     try {
       emit(
         AuthenticationLoading(),
@@ -107,9 +103,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         error = "User with this login already exist!";
         emit(
           AuthenticationInitial(),
-        );
+        ); 
         break;
       case Response.failureServiceError:
+        error = "Something wrong with server try later!";
+        emit(
+          AuthenticationInitial(),
+        );
     }
   }
 
@@ -135,7 +135,7 @@ enum ErrorType { noUser, wrongPass }
 
 class AuthPageData {
   PageType currentPage;
-  Function({String login, String password}) mainButtonAction;
+  Function({required String login, required String password}) mainButtonAction;
   String mainButtonText;
   List<String> serviceButtonText;
 
