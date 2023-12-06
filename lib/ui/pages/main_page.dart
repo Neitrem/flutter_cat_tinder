@@ -20,9 +20,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: LogoText(),
-        ),
+        centerTitle: true,
+        title: const LogoText(),
         // leading: IconButton(
         //   onPressed: () => {},
         //   icon: const Icon(Icons.settings),

@@ -17,7 +17,7 @@ const Gradient likeColorGragient = LinearGradient(
   end: Alignment(0.8, 1),
   colors: <Color>[
     Color(0xff4ef54b),
-    Color(0xff4bf5d4),
+    Color.fromARGB(24, 75, 245, 211),
   ], // Gradient from https://learnui.design/tools/gradient-generator.html
   tileMode: TileMode.clamp,
 );
@@ -36,8 +36,8 @@ const Gradient dislikeColorGragient = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment(0.8, 1),
   colors: <Color>[
-    Color.fromARGB(255, 245, 75, 75),
-    Color.fromARGB(255, 224, 114, 114),
+    Color.fromARGB(255, 244, 35, 35),
+    Color.fromARGB(16, 224, 114, 114),
   ], // Gradient from https://learnui.design/tools/gradient-generator.html
   tileMode: TileMode.clamp,
 );

@@ -57,6 +57,18 @@ class CatRepository {
     final List<Map<String, dynamic>> urls = await dbHelper.get(
       table: "favorite",
     );
-    return urls.map((map) => FavoriteDTO.fromDB(map)).toList();
+
+    List<FavoriteDTO> list = [];
+
+    for (Map<String, dynamic> map in urls) {
+      if (map["user_id"] == userId) {
+        list.add(
+          FavoriteDTO.fromDB(map),
+        );
+      }
+    }
+    print(list);
+    print(list.reversed);
+    return list.reversed.toList();
   }
 }

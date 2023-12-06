@@ -24,6 +24,8 @@ class CatService {
   }
 
   Future<List<FavoriteModel>> getFavorites({required int userId}) async {
-    return (await _repository.getFavorites(userId: userId)).map((dto) => FavoriteModel.fromDTO(dto)).toList();
+    return (await _repository.getFavorites(userId: userId))
+        .map((dto) => FavoriteModel.fromDTO(dto))
+        .toList();
   }
 }

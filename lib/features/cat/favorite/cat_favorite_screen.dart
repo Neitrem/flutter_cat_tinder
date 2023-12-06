@@ -14,7 +14,10 @@ class CatFavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CatFavoriteCubit(context: context, userId: userId),
+      create: (context) => CatFavoriteCubit(
+        context: context,
+        userId: userId,
+      )..loadFavoirites(),
       child: BlocConsumer<CatFavoriteCubit, CatFavoriteState>(
         listener: (context, state) => {},
         builder: (context, state) {
