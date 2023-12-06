@@ -34,7 +34,6 @@ class UserDTO implements IDBModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'login': login,
       'password': password,
     };

@@ -31,13 +31,8 @@ TextStyle errorTitleTextStyle = const TextStyle(
 );
 
 TextStyle logoTextStyle = const TextStyle(
-  fontSize: 30,
-  fontWeight: FontWeight.w600,
+  fontSize: 35,
+  fontWeight: FontWeight.w800,
   letterSpacing: 5,
-  shadows: <Shadow>[
-    Shadow(
-      offset: Offset(0.0, -2.0),
-      blurRadius: 0.0,
-    ),
-  ],
+
 );

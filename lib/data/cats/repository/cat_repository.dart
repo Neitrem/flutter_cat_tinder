@@ -1,10 +1,14 @@
 import 'package:cinder/config/env.dart';
 import 'package:cinder/data/cats/models/cat_dto.dart';
+import 'package:cinder/data/cats/models/favorite_dto.dart';
+import 'package:cinder/db/database_helper.dart';
 import 'package:dio/dio.dart';
 
 class CatRepository {
   // ignore: constant_identifier_names
   static const _BASE_URL = 'https://api.thecatapi.com/v1/images';
+
+  final dbHelper = DatabaseHelper.instance;
 
   final AppEnv env = appEnv;
 
@@ -17,15 +21,10 @@ class CatRepository {
       '/search',
       options: Options(
         headers: {
-          "x-api-key":
-              env.catApiKey,
+          "x-api-key": env.catApiKey,
         },
       ),
-      queryParameters: {
-        'has_breeds': 1,
-        'limit': amount,
-        'order': "RANDOM"
-      },
+      queryParameters: {'has_breeds': 1, 'limit': amount, 'order': "RANDOM"},
     );
     final data = response.data as List<dynamic>;
 
@@ -42,5 +41,22 @@ class CatRepository {
     }
 
     return null;
+  }
+
+  Future<void> addFavorite(FavoriteDTO dto) async {
+    try {
+      if (!await dbHelper.isAlreadyInFavorite(dto)) {
+        await dbHelper.insert(dto);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<List<FavoriteDTO>> getFavorites({required int userId}) async {
+    final List<Map<String, dynamic>> urls = await dbHelper.get(
+      table: "favorite",
+    );
+    return urls.map((map) => FavoriteDTO.fromDB(map)).toList();
   }
 }

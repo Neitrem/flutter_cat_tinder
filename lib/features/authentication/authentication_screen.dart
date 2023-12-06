@@ -1,6 +1,6 @@
 import 'package:cinder/features/authentication/authentication_cubit.dart';
 import 'package:cinder/features/authentication/authentication_state.dart';
-import 'package:cinder/features/cat/cat_main_screen.dart';
+import 'package:cinder/features/cat/main/cat_main_screen.dart';
 import 'package:cinder/ui/components/loading_animation.dart';
 import 'package:cinder/ui/pages/authenticate_page.dart';
 import 'package:cinder/ui/pages/error_page.dart';

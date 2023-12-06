@@ -1,6 +1,6 @@
 import 'package:cinder/data/cats/repository/cat_repository.dart';
 import 'package:cinder/domain/authentication/models/user_model.dart';
-import 'package:cinder/features/cat/cat_main_screen.dart';
+import 'package:cinder/features/cat/main/cat_main_screen.dart';
 import 'package:cinder/features/splash_screen/splash_screen_screen.dart';
 import 'package:cinder/ui/styles/styles.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
         home: CatMainScreen(user: UserModel(id: 1, login: "", password: ""),)

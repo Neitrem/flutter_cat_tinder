@@ -53,20 +53,37 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.insert(
       model.table,
-      {
-        "login": model.toMap()['login'],
-        "password": model.toMap()['password'],
-      },
+      model.toMap(),
     );
   }
 
-  Future<List<Map<String, dynamic>>> get(IDBModel model) async {
+  Future<List<Map<String, dynamic>>> get({required String table}) async {
     Database db = await instance.database;
-    return await db.query(model.table);
+    return await db.query(table);
   }
 
   Future<bool> userExist(IDBModel model) async {
     Database db = await instance.database;
-    return (await db.query(model.table, where: "login = ?", whereArgs: [model.toMap()['login']])).isNotEmpty;
-  } 
+    return (await db.query(
+      model.table,
+      where: "login = ?",
+      whereArgs: [
+        model.toMap()['login'],
+      ],
+    ))
+        .isNotEmpty;
+  }
+
+  Future<bool> isAlreadyInFavorite(IDBModel model) async {
+    Database db = await instance.database;
+    return (await db.query(
+      model.table,
+      where: "url = ? AND user_id = ?",
+      whereArgs: [
+        model.toMap()['url'],
+        model.toMap()['user_id'],
+      ],
+    ))
+        .isNotEmpty;
+  }
 }

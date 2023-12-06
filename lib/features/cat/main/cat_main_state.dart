@@ -13,10 +13,20 @@ final class CatMainLoading extends CatMainBuildState {}
 final class CatMainError extends CatMainListenState {
   final String error;
   final Function fromFunction;
+  Map<Symbol, dynamic>? namedArguments;
 
   CatMainError({
     required this.error,
     required this.fromFunction,
+    this.namedArguments,
+  });
+}
+
+final class CatMainRedirect extends CatMainListenState {
+  final int userId;
+
+  CatMainRedirect({
+    required this.userId,
   });
 }
 

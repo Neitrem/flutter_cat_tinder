@@ -1,19 +1,23 @@
 import 'package:cinder/domain/cats/models/cat_model.dart';
 import 'package:flutter/material.dart';
 
-enum CardStatus {like, dislike, superLike}
+enum CardStatus { like, dislike, superLike }
 
 class CardProvider extends ChangeNotifier {
-
   CardProvider({
     required this.cats,
-    required this.loadMoreCats
+    required this.popCat,
+    required this.likeCat,
+    required this.context,
   });
 
-  Function() loadMoreCats;
+  Function() popCat;
+  Function({required String url}) likeCat;
+  BuildContext context;
   List<CatModel> cats;
+
   Offset _position = Offset.zero;
-  bool _isDragging = false;
+  bool _isDragging = true;
   Size _screenSize = Size.zero;
   double _angle = 0.0;
 
@@ -47,10 +51,10 @@ class CardProvider extends ChangeNotifier {
     switch (status) {
       case CardStatus.like:
         like();
-      break;
+        break;
       case CardStatus.dislike:
         dislike();
-      break;
+        break;
       default:
         resetPosition();
     }
@@ -58,7 +62,7 @@ class CardProvider extends ChangeNotifier {
 
   CardStatus? getStatus() {
     final x = position.dx;
-    
+
     const delta = 100.0;
 
     if (x >= delta) {
@@ -71,14 +75,19 @@ class CardProvider extends ChangeNotifier {
   }
 
   void like() {
+    _isDragging = false;
     _angle = 20.0;
     _position += Offset(2 * _screenSize.width, 0);
+
+    likeCat(url: cats.last.url);
+
     _nextCard();
 
     notifyListeners();
   }
 
   void dislike() {
+    _isDragging = false;
     _angle = -20;
     _position -= Offset(2 * _screenSize.width, 0);
     _nextCard();
@@ -87,7 +96,7 @@ class CardProvider extends ChangeNotifier {
   }
 
   void resetPosition() {
-    _isDragging = false;
+    _isDragging = true;
     _position = Offset.zero;
     _angle = 0.0;
 
@@ -95,12 +104,8 @@ class CardProvider extends ChangeNotifier {
   }
 
   Future _nextCard() async {
-    if (cats.length == 3) {
-      loadMoreCats();
-    }
-
-    await Future.delayed(const Duration(milliseconds: 700));
-    cats.removeLast();
+    await Future.delayed(const Duration(milliseconds: 800));
+    popCat();
     resetPosition();
   }
 }

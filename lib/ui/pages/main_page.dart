@@ -1,5 +1,7 @@
 import 'package:cinder/domain/cats/models/cat_model.dart';
+import 'package:cinder/features/cat/main/cat_main_cubit.dart';
 import 'package:cinder/ui/components/cat_card.dart';
+import 'package:cinder/ui/components/logo.dart';
 import 'package:cinder/ui/provider/card_provider.dart';
 import 'package:cinder/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,13 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cinder"),
-        leading: IconButton(
-          onPressed: () => {},
-          icon: const Icon(Icons.settings),
+        title: const Center(
+          child: LogoText(),
         ),
+        // leading: IconButton(
+        //   onPressed: () => {},
+        //   icon: const Icon(Icons.settings),
+        // ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,21 +43,41 @@ class _MainPageState extends State<MainPage> {
               children: <Widget>[
                 CircleWrappedGradientIconButton(
                   size: 120,
-                  gradient: primaryColorGragient,
-                  icon: Icons.abc,
-                  toDo: () {},
+                  gradient: dislikeColorGragient,
+                  icon: Icons.close,
+                  toDo: () {
+                    final provider = Provider.of<CardProvider>(
+                      context,
+                      listen: false,
+                    );
+                    if (provider.isDragging) {
+                      provider.dislike();
+                    } else {
+                      () {};
+                    }
+                  },
                 ),
                 CircleWrappedGradientIconButton(
                   size: 70,
-                  gradient: primaryColorGragient,
+                  gradient: favoriteColorGragient,
                   icon: Icons.star,
-                  toDo: () {},
+                  toDo: context.read<CatMainCubit>().toFavorite,
                 ),
                 CircleWrappedGradientIconButton(
                   size: 120,
-                  gradient: primaryColorGragient,
+                  gradient: likeColorGragient,
                   icon: Icons.favorite,
-                  toDo: () {},
+                  toDo: () {
+                    final provider = Provider.of<CardProvider>(
+                      context,
+                      listen: false,
+                    );
+                    if (provider.isDragging) {
+                      provider.like();
+                    } else {
+                      () {};
+                    }
+                  },
                 ),
               ],
             ),

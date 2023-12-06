@@ -1,6 +1,7 @@
 import 'package:cinder/domain/authentication/models/user_model.dart';
-import 'package:cinder/features/cat/cat_main_cubit.dart';
-import 'package:cinder/features/cat/cat_main_state.dart';
+import 'package:cinder/features/cat/favorite/cat_favorite_screen.dart';
+import 'package:cinder/features/cat/main/cat_main_cubit.dart';
+import 'package:cinder/features/cat/main/cat_main_state.dart';
 import 'package:cinder/ui/components/loading_animation.dart';
 import 'package:cinder/ui/pages/error_page.dart';
 import 'package:cinder/ui/pages/main_page.dart';
@@ -20,9 +21,23 @@ class CatMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CatCubit()..getCats(),
-      child: BlocConsumer<CatCubit, CatMainState>(
-        listener: (context, state) {},
+      create: (context) => CatMainCubit(
+        context: context,
+        user: user,
+      )..preparing(),
+      child: BlocConsumer<CatMainCubit, CatMainState>(
+        listener: (context, state) {
+          if (state is CatMainRedirect) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CatFavoriteScreen(
+                  userId: state.userId,
+                ),
+              ),
+            );
+          }
+        },
         buildWhen: (previous, current) =>
             current is CatMainBuildState || current is CatMainError,
         builder: (context, state) {
@@ -36,15 +51,17 @@ class CatMainScreen extends StatelessWidget {
           } else if (state is CatMainData) {
             return ChangeNotifierProvider(
               create: (context) => CardProvider(
-                cats: state.cats,
-                loadMoreCats: context.read<CatCubit>().loadMoreCats,
-              ),
+                  cats: state.cats,
+                  popCat: context.read<CatMainCubit>().pop,
+                  likeCat: context.read<CatMainCubit>().addToFavorite,
+                  context: context),
               child: MainPage(cats: state.cats),
             );
           } else if (state is CatMainError) {
             return ErrorPage(
               fromFunction: state.fromFunction,
               errorText: state.error,
+              namedArguments: state.namedArguments,
             );
           }
           return const Text("Error!!!");

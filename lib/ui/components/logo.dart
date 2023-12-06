@@ -13,7 +13,8 @@ class LogoText extends StatelessWidget {
       ),
       child: Text(
         "Cinder",
-        style: logoTextStyle
+        style: logoTextStyle,
+        textAlign: TextAlign.center,
       ),
     );
   }

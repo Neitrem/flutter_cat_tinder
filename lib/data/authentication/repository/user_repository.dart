@@ -24,7 +24,9 @@ class UserRepository {
   }
 
   Future<DBResponse> login(UserDTO dto) async {
-    List<Map<String, dynamic>> maps = await dbHelper.get(dto);
+    List<Map<String, dynamic>> maps = await dbHelper.get(
+      table: dto.table,
+    );
 
     for (Map<String, dynamic> map in maps) {
       if (map['login'] as String == dto.login) {
@@ -85,4 +87,10 @@ class DBResponse {
   });
 }
 
-enum Response { success, failureWrongPass, failureNoUser, failureServiceError, failureUserAlreadyExist }
+enum Response {
+  success,
+  failureWrongPass,
+  failureNoUser,
+  failureServiceError,
+  failureUserAlreadyExist
+}

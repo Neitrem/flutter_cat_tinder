@@ -12,6 +12,36 @@ const Gradient primaryColorGragient = LinearGradient(
   tileMode: TileMode.clamp,
 );
 
+const Gradient likeColorGragient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment(0.8, 1),
+  colors: <Color>[
+    Color(0xff4ef54b),
+    Color(0xff4bf5d4),
+  ], // Gradient from https://learnui.design/tools/gradient-generator.html
+  tileMode: TileMode.clamp,
+);
+
+const Gradient favoriteColorGragient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment(0.8, 1),
+  colors: <Color>[
+    Color(0xffE54BF5),
+    Color(0xff61E7F7),
+  ], // Gradient from https://learnui.design/tools/gradient-generator.html
+  tileMode: TileMode.clamp,
+);
+
+const Gradient dislikeColorGragient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment(0.8, 1),
+  colors: <Color>[
+    Color.fromARGB(255, 245, 75, 75),
+    Color.fromARGB(255, 224, 114, 114),
+  ], // Gradient from https://learnui.design/tools/gradient-generator.html
+  tileMode: TileMode.clamp,
+);
+
 const Color secondaryColor = Color(0xff232936);
 
 const Color darkGrey = Color(0xff4C566C);
