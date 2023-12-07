@@ -15,7 +15,7 @@ class SplashScreenScreen extends StatelessWidget {
       create: (context) => SplashScreenCubit()..loadImage(context),
       child: BlocConsumer<SplashScreenCubit, SplashScreenState>(
         listener: (context, state) {
-          if (state is SplashScreenDataState) {
+          if (state is SplashScreenRedirectState) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -25,8 +25,9 @@ class SplashScreenScreen extends StatelessWidget {
                 ),
               ),
             );
-          } 
+          }
         },
+        buildWhen: (previous, current) => current is SplashScreenBuildState,
         builder: (context, state) {
           if (state is SplashScreenLoadingState) {
             return SplashScreenPage();

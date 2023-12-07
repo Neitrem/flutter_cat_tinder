@@ -39,9 +39,8 @@ class CatMainScreen extends StatelessWidget {
           }
         },
         buildWhen: (previous, current) =>
-            current is CatMainBuildState || current is CatMainError,
+            current is CatMainBuildState,
         builder: (context, state) {
-          print(user.id);
           if (state is CatMainLoading) {
             return const Stack(
               children: <Widget>[

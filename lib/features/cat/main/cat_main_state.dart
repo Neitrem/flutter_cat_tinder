@@ -10,7 +10,7 @@ final class CatMainInitial extends CatMainBuildState {}
 
 final class CatMainLoading extends CatMainBuildState {}
 
-final class CatMainError extends CatMainListenState {
+final class CatMainError extends CatMainBuildState {
   final String error;
   final Function fromFunction;
   Map<Symbol, dynamic>? namedArguments;

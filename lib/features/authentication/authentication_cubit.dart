@@ -84,7 +84,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       case Response.success:
         _service.saveLoginData(response.data!.login, response.data!.password);
         emit(
-          AuthenticationData(user: response.data!),
+          AuthenticationRedirect(user: response.data!),
         );
         break;
       case Response.failureNoUser:

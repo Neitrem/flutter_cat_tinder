@@ -67,8 +67,6 @@ class CatRepository {
         );
       }
     }
-    print(list);
-    print(list.reversed);
     return list.reversed.toList();
   }
 }

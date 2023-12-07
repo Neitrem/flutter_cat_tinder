@@ -21,12 +21,12 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthenticationCubit(
-        dataLogin: null,
-        dataPassword: null,
+        dataLogin: login,
+        dataPassword: password,
       ),
       child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
-          if (state is AuthenticationData) {
+          if (state is AuthenticationRedirect) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -37,6 +37,7 @@ class AuthenticationScreen extends StatelessWidget {
             );
           }
         },
+        buildWhen: (previous, current) => current is AuthenticationBuildState,
         builder: (context, state) {
           if (state is AuthenticationInitial) {
             return AuthenticatePage();

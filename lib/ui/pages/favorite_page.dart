@@ -30,7 +30,7 @@ class _CatFavoritePageState extends State<CatFavoritePage> {
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
             size: 35,
-            color: secondaryColor,
+            color: lightGrey,
           ),
         ),
         centerTitle: true,
@@ -50,7 +50,7 @@ class _CatFavoritePageState extends State<CatFavoritePage> {
                 borderRadius: borderRadius,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
+                    color: lightGrey.withOpacity(0.3),
                     spreadRadius: 1,
                     blurRadius: 5,
                     offset: const Offset(1, 1), // changes position of shadow

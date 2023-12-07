@@ -20,16 +20,20 @@ final class AuthenticationInitial extends AuthenticationBuildState {
 
 final class AuthenticationLoading extends AuthenticationBuildState {}
 
-final class AuthenticationError extends AuthenticationListenState {
+final class AuthenticationError extends AuthenticationBuildState {
   final String error;
   final Function fromFunction;
   final Map<Symbol, dynamic>? namedArguments;
 
-  AuthenticationError({required this.error, required this.fromFunction, this.namedArguments});
+  AuthenticationError({
+    required this.error,
+    required this.fromFunction,
+    this.namedArguments,
+  });
 }
 
-final class AuthenticationData extends AuthenticationBuildState {
+final class AuthenticationRedirect extends AuthenticationListenState {
   final UserModel user;
 
-  AuthenticationData({required this.user});
+  AuthenticationRedirect({required this.user});
 }

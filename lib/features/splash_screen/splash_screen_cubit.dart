@@ -27,7 +27,7 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
         const Duration(seconds: 4),
       );
       emit(
-        SplashScreenDataState(
+        SplashScreenRedirectState(
           login: savedData != null ? savedData["login"] : null,
           password: savedData != null ? savedData["password"] : null,
         ),

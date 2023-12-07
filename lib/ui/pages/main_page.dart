@@ -22,10 +22,6 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const LogoText(),
-        // leading: IconButton(
-        //   onPressed: () => {},
-        //   icon: const Icon(Icons.settings),
-        // ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

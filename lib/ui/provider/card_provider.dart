@@ -1,7 +1,7 @@
 import 'package:cinder/domain/cats/models/cat_model.dart';
 import 'package:flutter/material.dart';
 
-enum CardStatus { like, dislike, superLike }
+enum CardStatus { like, dislike, centre }
 
 class CardProvider extends ChangeNotifier {
   CardProvider({
@@ -20,10 +20,12 @@ class CardProvider extends ChangeNotifier {
   bool _isDragging = true;
   Size _screenSize = Size.zero;
   double _angle = 0.0;
+  CardStatus _status = CardStatus.centre;
 
   bool get isDragging => _isDragging;
   Offset get position => _position;
   double get angle => _angle;
+  CardStatus get status => _status;
 
   void setScreenSize(Size screenSize) => _screenSize = screenSize;
 
@@ -38,17 +40,14 @@ class CardProvider extends ChangeNotifier {
 
     final x = position.dx;
     _angle = 45 * x / _screenSize.width;
-
+    getStatus();
     notifyListeners();
   }
 
   void endPosition() {
     _isDragging = false;
     notifyListeners();
-
-    final status = getStatus();
-
-    switch (status) {
+    switch (_status) {
       case CardStatus.like:
         like();
         break;
@@ -60,17 +59,17 @@ class CardProvider extends ChangeNotifier {
     }
   }
 
-  CardStatus? getStatus() {
+  void getStatus() {
     final x = position.dx;
 
     const delta = 100.0;
 
     if (x >= delta) {
-      return CardStatus.like;
+      _status = CardStatus.like;
     } else if (x <= -delta) {
-      return CardStatus.dislike;
+      _status = CardStatus.dislike;
     } else {
-      return null;
+      _status = CardStatus.centre;
     }
   }
 
@@ -78,7 +77,7 @@ class CardProvider extends ChangeNotifier {
     _isDragging = false;
     _angle = 20.0;
     _position += Offset(2 * _screenSize.width, 0);
-
+    _status = CardStatus.like;
     likeCat(url: cats.last.url);
 
     _nextCard();
@@ -90,6 +89,8 @@ class CardProvider extends ChangeNotifier {
     _isDragging = false;
     _angle = -20;
     _position -= Offset(2 * _screenSize.width, 0);
+    _status = CardStatus.dislike;
+
     _nextCard();
 
     notifyListeners();
@@ -99,6 +100,7 @@ class CardProvider extends ChangeNotifier {
     _isDragging = true;
     _position = Offset.zero;
     _angle = 0.0;
+    _status = CardStatus.centre;
 
     notifyListeners();
   }
