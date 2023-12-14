@@ -19,44 +19,46 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationCubit(
-        dataLogin: login,
-        dataPassword: password,
-      ),
-      child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
-        listener: (context, state) {
-          if (state is AuthenticationRedirect) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CatMainScreen(
-                  user: state.user,
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => AuthenticationCubit(
+          dataLogin: login,
+          dataPassword: password,
+        ),
+        child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
+          listener: (context, state) {
+            if (state is AuthenticationRedirect) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CatMainScreen(
+                    user: state.user,
+                  ),
                 ),
-              ),
-            );
-          }
-        },
-        buildWhen: (previous, current) => current is AuthenticationBuildState,
-        builder: (context, state) {
-          if (state is AuthenticationInitial) {
-            return AuthenticatePage();
-          } else if (state is AuthenticationLoading) {
-            return Stack(
-              children: <Widget>[
-                AuthenticatePage(),
-                const LoadingAnimation(),
-              ],
-            );
-          } else if (state is AuthenticationError) {
-            return ErrorPage(
-              fromFunction: state.fromFunction,
-              errorText: state.error,
-              namedArguments: state.namedArguments,
-            );
-          }
-          return const Text("data");
-        },
+              );
+            }
+          },
+          buildWhen: (previous, current) => current is AuthenticationBuildState,
+          builder: (context, state) {
+            if (state is AuthenticationInitial) {
+              return AuthenticatePage();
+            } else if (state is AuthenticationLoading) {
+              return Stack(
+                children: <Widget>[
+                  AuthenticatePage(),
+                  const LoadingAnimation(),
+                ],
+              );
+            } else if (state is AuthenticationError) {
+              return ErrorPage(
+                fromFunction: state.fromFunction,
+                errorText: state.error,
+                namedArguments: state.namedArguments,
+              );
+            }
+            return const Text("data");
+          },
+        ),
       ),
     );
   }

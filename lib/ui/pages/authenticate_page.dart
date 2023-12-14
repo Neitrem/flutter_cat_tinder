@@ -29,90 +29,88 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              'assets/CinderLogo.png',
-              scale: 3,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ErrorContainer(
-                    errorText: context.read<AuthenticationCubit>().error,
-                  ),
-                  InputContainer(
-                    hintText: "Login",
-                    inputController: widget.inputLoginController,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InputContainer(
-                    hintText: "Password",
-                    inputController: widget.inputPasswordController,
-                    isPassword: true,
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Material(
-                    elevation: 1,
-                    child: Container(
-                      width: 200.0,
-                      height: 40.0,
-                      decoration: const BoxDecoration(
-                          gradient: primaryColorGragient,
-                          borderRadius: borderRadius),
-                      child: TextButton(
-                        onPressed: enter,
-                        style: primaryButtonStyle,
-                        child: Text(
-                          context
-                              .read<AuthenticationCubit>()
-                              .pageData
-                              .mainButtonText,
-                          style: commonTextStyleLight,
-                        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            'assets/CinderLogo.png',
+            scale: 3,
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ErrorContainer(
+                  errorText: context.read<AuthenticationCubit>().error,
+                ),
+                InputContainer(
+                  hintText: "Login",
+                  inputController: widget.inputLoginController,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                InputContainer(
+                  hintText: "Password",
+                  inputController: widget.inputPasswordController,
+                  isPassword: true,
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Material(
+                  elevation: 1,
+                  child: Container(
+                    width: 200.0,
+                    height: 40.0,
+                    decoration: const BoxDecoration(
+                        gradient: primaryColorGragient,
+                        borderRadius: borderRadius),
+                    child: TextButton(
+                      onPressed: enter,
+                      style: primaryButtonStyle,
+                      child: Text(
+                        context
+                            .read<AuthenticationCubit>()
+                            .pageData
+                            .mainButtonText,
+                        style: commonTextStyleLight,
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(context
-                          .read<AuthenticationCubit>()
-                          .pageData
-                          .serviceButtonText[0]),
-                      TextButton(
-                        style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                const EdgeInsets.all(0)),
-                            splashFactory: NoSplash.splashFactory),
-                        onPressed: () =>
-                            context.read<AuthenticationCubit>().changePage(),
-                        child: Text(
-                          context
-                              .read<AuthenticationCubit>()
-                              .pageData
-                              .serviceButtonText[1],
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(context
+                        .read<AuthenticationCubit>()
+                        .pageData
+                        .serviceButtonText[0]),
+                    TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              const EdgeInsets.all(0)),
+                          splashFactory: NoSplash.splashFactory),
+                      onPressed: () =>
+                          context.read<AuthenticationCubit>().changePage(),
+                      child: Text(
+                        context
+                            .read<AuthenticationCubit>()
+                            .pageData
+                            .serviceButtonText[1],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
