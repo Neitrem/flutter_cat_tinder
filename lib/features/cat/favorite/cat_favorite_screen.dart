@@ -48,7 +48,6 @@ class _CatFavoriteScreenState extends State<CatFavoriteScreen> {
             if (state is CatFavoriteLoading) {
               return const Stack(
                 children: <Widget>[
-                  Scaffold(),
                   LoadingAnimation(),
                 ],
               );
