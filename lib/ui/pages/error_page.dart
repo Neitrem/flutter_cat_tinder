@@ -19,41 +19,39 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Error!!!",
-              style: errorTitleTextStyle,
-            ),
-            Text(
-              errorText,
-              style: commonTextStyleDark,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            TextButton(
-              onPressed: doJob,
-              child: const Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.repeat,
-                    size: 40,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Error!!!",
+            style: errorTitleTextStyle,
+          ),
+          Text(
+            errorText,
+            style: commonTextStyleDark,
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          TextButton(
+            onPressed: doJob,
+            child: const Column(
+              children: <Widget>[
+                Icon(
+                  Icons.repeat,
+                  size: 40,
+                ),
+                Text(
+                  "Retry",
+                  style: TextStyle(
+                    fontSize: 18,
                   ),
-                  Text(
-                    "Retry",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

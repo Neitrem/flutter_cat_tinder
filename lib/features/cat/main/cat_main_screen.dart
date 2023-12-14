@@ -38,8 +38,7 @@ class CatMainScreen extends StatelessWidget {
             );
           }
         },
-        buildWhen: (previous, current) =>
-            current is CatMainBuildState,
+        buildWhen: (previous, current) => current is CatMainBuildState,
         builder: (context, state) {
           if (state is CatMainLoading) {
             return const Stack(
@@ -51,10 +50,11 @@ class CatMainScreen extends StatelessWidget {
           } else if (state is CatMainData) {
             return ChangeNotifierProvider(
               create: (context) => CardProvider(
-                  cats: state.cats,
-                  popCat: context.read<CatMainCubit>().pop,
-                  likeCat: context.read<CatMainCubit>().addToFavorite,
-                  context: context),
+                cats: state.cats,
+                popCat: context.read<CatMainCubit>().pop,
+                likeCat: context.read<CatMainCubit>().addToFavorite,
+                context: context,
+              ),
               child: MainPage(cats: state.cats),
             );
           } else if (state is CatMainError) {

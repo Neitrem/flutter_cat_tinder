@@ -24,7 +24,11 @@ class CatRepository {
           "x-api-key": env.catApiKey,
         },
       ),
-      queryParameters: {'has_breeds': 1, 'limit': amount, 'order': "RANDOM"},
+      queryParameters: {
+        'has_breeds': 1,
+        'limit': amount,
+        'order': "RANDOM",
+      },
     );
     final data = response.data as List<dynamic>;
 

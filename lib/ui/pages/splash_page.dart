@@ -15,48 +15,43 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(
-              gradient: primaryColorGragient
-            ),
-          ),
-          Container(
-            alignment: Alignment.topCenter,
-            child: ChangeNotifierProvider(
-              create: (context) {
-                return WaveProvider(
-                  startWaveHeight: 570.0,
-                  finalWaveHeight: 0.0,
-                )..setNewHeight();
-              },
-              child: Transform.rotate(
-                angle: pi,
-                child: const WaveContainer(
-                  width: double.infinity,
-                  waveColor: white,
-                  duration: Duration(milliseconds: 1000),
-                ),
+    return Stack(
+      children: <Widget>[
+        Container(
+          decoration: const BoxDecoration(gradient: primaryColorGragient),
+        ),
+        Container(
+          alignment: Alignment.topCenter,
+          child: ChangeNotifierProvider(
+            create: (context) {
+              return WaveProvider(
+                startWaveHeight: 570.0,
+                finalWaveHeight: 0.0,
+              )..setNewHeight();
+            },
+            child: Transform.rotate(
+              angle: pi,
+              child: const WaveContainer(
+                width: double.infinity,
+                waveColor: white,
+                duration: Duration(milliseconds: 1000),
               ),
             ),
           ),
-          Container(
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'assets/CinderLogoVoid.png',
             alignment: Alignment.center,
-            child: Image.asset(
-              'assets/CinderLogoVoid.png',
-              alignment: Alignment.center,
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          )
-        ],
-      ),
+            height: double.infinity,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        )
+      ],
     );
   }
 }

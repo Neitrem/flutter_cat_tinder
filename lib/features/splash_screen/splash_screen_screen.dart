@@ -11,34 +11,40 @@ class SplashScreenScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SplashScreenCubit()..loadImage(context),
-      child: BlocConsumer<SplashScreenCubit, SplashScreenState>(
-        listener: (context, state) {
-          if (state is SplashScreenRedirectState) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AuthenticationScreen(
-                  login: state.login,
-                  password: state.password,
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => SplashScreenCubit(
+          context: context,
+        )..load(),
+        child: BlocConsumer<SplashScreenCubit, SplashScreenState>(
+          listener: (context, state) {
+            if (state is SplashScreenRedirectState) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AuthenticationScreen(
+                    login: state.login,
+                    password: state.password,
+                  ),
                 ),
-              ),
+              );
+            }
+          },
+          buildWhen: (previous, current) => current is SplashScreenBuildState,
+          builder: (context, state) {
+            if (state is SplashScreenLoadingState) {
+              return SplashScreenPage();
+            } else if (state is SplashScreenErrorState) {
+              return ErrorPage(
+                fromFunction: state.fromFunction,
+                errorText: state.error,
+              );
+            }
+            return const Placeholder(
+              color: Colors.transparent,
             );
-          }
-        },
-        buildWhen: (previous, current) => current is SplashScreenBuildState,
-        builder: (context, state) {
-          if (state is SplashScreenLoadingState) {
-            return SplashScreenPage();
-          } else if (state is SplashScreenErrorState) {
-            return ErrorPage(
-              fromFunction: state.fromFunction,
-              errorText: state.error,
-            );
-          }
-          return const Scaffold();
-        },
+          },
+        ),
       ),
     );
   }

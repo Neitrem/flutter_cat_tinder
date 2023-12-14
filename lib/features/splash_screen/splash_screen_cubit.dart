@@ -7,20 +7,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class SplashScreenCubit extends Cubit<SplashScreenState> {
-  SplashScreenCubit() : super(SplashScreenInitialState());
+  final BuildContext context;
+  SplashScreenCubit({required this.context}) : super(SplashScreenInitialState());
 
   int counter = 0;
 
   final SplashService _service = SplashService();
 
   Future<void> load() async {
+    await _loadImages();
     emit(
       SplashScreenLoadingState(),
     );
-    await checkInternet();
+    await _checkInternet();
   }
 
-  Future<void> checkSavedData() async {
+  Future<void> _checkSavedData() async {
     try {
       final Map<String, dynamic>? savedData = await _service.getSavedData();
       await Future.delayed(
@@ -36,23 +38,23 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
       emit(
         SplashScreenErrorState(
           error: "Something exactly wrong in saved data!",
-          fromFunction: checkSavedData,
+          fromFunction: _checkSavedData,
         ),
       );
     }
   }
 
-  Future<void> checkInternet() async {
+  Future<void> _checkInternet() async {
     try {
       bool result = await InternetConnectionChecker().hasConnection;
       if (result == true) {
         print('YAY! Free cute dog pics!');
-        await checkSavedData();
+        await _checkSavedData();
       } else {
         emit(
           SplashScreenErrorState(
             error: "No internet :(",
-            fromFunction: checkInternet,
+            fromFunction: _checkInternet,
           ),
         );
       }
@@ -60,17 +62,13 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
       emit(
         SplashScreenErrorState(
           error: e.toString(),
-          fromFunction: checkInternet,
+          fromFunction: _checkInternet,
         ),
       );
     }
   }
 
-  Future<Map<String, dynamic>?> getSavedData() async {
-    return await _service.getSavedData();
-  }
-
-  Future<void> loadImage(BuildContext context) async {
+  Future<void> _loadImages() async {
     try {
       final manifestJson =
           await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
@@ -82,8 +80,6 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
       for (String imgPath in images) {
         if (context.mounted) await precacheImage(AssetImage(imgPath), context);
       }
-
-      await load();
       print('Image loaded and cached successfully!');
     } catch (e) {
       print('Failed to load and cache the image: $e');
